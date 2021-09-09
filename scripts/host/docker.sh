@@ -98,6 +98,18 @@ docker_exec() {
   )
 }
 
+docker_exec_builder() {
+  (
+    cat /etc/passwd
+    local exec_envs=()
+    IFS=$'\x20'
+    for env_name in ${DK_EXEC_ENVS}; do
+      exec_envs+=( -e "${env_name}=${!env_name}" )
+    done
+    docker exec -u builder -i "${exec_envs[@]}" "$@"
+  )
+}
+
 append_docker_exec_env() {
   for env_name in "$@"; do
     DK_EXEC_ENVS="${DK_EXEC_ENVS} ${env_name}"
