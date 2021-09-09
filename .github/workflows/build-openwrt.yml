@@ -34,7 +34,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     # For `github.event`'s structure, see: https://developer.github.com/v3/activity/events/types/
     # Do not modify the trigger methods here, customize them in the `on` section
     if: |
@@ -53,7 +53,7 @@ jobs:
           - test
         # ########### Add your target name below ###########
         # E.g. target: [x86_64, wdr4310v1]
-        target: []
+        target: [cr6606]
         include:
         - mode: normal
           title: Build
