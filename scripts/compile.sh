@@ -22,7 +22,7 @@ fi
 compile() {
   (
     cd "${OPENWRT_CUR_DIR}"/.. && echo "Before owner fix:" && ls -al
-    sudo chown -R $(whoami):$(whoami) * && echo "After owner fix:" && ls -al
+    sudo chown -R $(whoami):$(whoami) "${OPENWRT_CUR_DIR}" && echo "After owner fix:" && ls -al
     cd "${OPENWRT_CUR_DIR}"
     if [ "x${MODE}" = "xm" ]; then
       local nthread=$(($(nproc) + 1)) 
