@@ -100,7 +100,6 @@ docker_exec() {
 
 docker_exec_builder() {
   (
-    cat /etc/passwd
     local exec_envs=()
     IFS=$'\x20'
     for env_name in ${DK_EXEC_ENVS}; do

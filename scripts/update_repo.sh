@@ -46,13 +46,27 @@ fi
 # of unchanged files (even if their timestamp changed)
 # and make changed files' timestamps most recent
 
+if [ "x${OPENWRT_CUR_DIR}" != "x${OPENWRT_COMPILE_DIR}" ]; then
+  echo "Condition 1: True"
+fi
+
+if [ -d "${OPENWRT_COMPILE_DIR}/.git" ]; then
+  echo "Condition 2: True"
+fi
+
+if [ "x${OPT_UPDATE_REPO}" != "x1" ]; then
+  echo "Condition 3: True"
+fi
+
 if [ "x${OPENWRT_CUR_DIR}" != "x${OPENWRT_COMPILE_DIR}" ] && [ -d "${OPENWRT_COMPILE_DIR}/.git" ] && [ "x${OPT_UPDATE_REPO}" != "x1" ]; then
   git clone "${OPENWRT_COMPILE_DIR}" "${OPENWRT_CUR_DIR}"
   git -C "${OPENWRT_CUR_DIR}" remote set-url origin "${REPO_URL}"
   git -C "${OPENWRT_CUR_DIR}" fetch
   git -C "${OPENWRT_CUR_DIR}" checkout "${REPO_BRANCH}"
 else
-  git clone -b "${REPO_BRANCH}" "${REPO_URL}" "${OPENWRT_CUR_DIR}"
+  git clone -b "${REPO_BRANCH}" "${REPO_URL}" "${OPENWRT_CUR_DIR}" || true
+  cd "${OPENWRT_CUR_DIR}"
+  git pull
 fi
 
 link_bin
